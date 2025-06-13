@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Disaster Waste Tracker - Simple Version
+
+Resources:
+  WasteClassifierFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      InlineCode: |
+        import json
+        from datetime import datetime
+        
+        def lambda_handler(event, context):
+            return {
+                'statusCode': 200,
+                'headers': {'Access-Control-Allow-Origin': '*'},
+                'body': json.dumps({
+                    'incident_id': f'INC-{datetime.now().strftime("%Y%m%d%H%M%S")}',
+                    'status': 'SUCCESS',
+                    'message': 'Disaster Waste Tracker is working!'
+                })
+            }
+      Handler: index.lambda_handler
+      Runtime: python3.9
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /test
+            Method: get
+
+Outputs:
+  ApiUrl:
+    Description: "API Gateway URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/test"

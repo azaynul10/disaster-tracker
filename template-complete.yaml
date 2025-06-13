@@ -1,0 +1,270 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Real-Time Environmental Disaster Waste Tracking System - Complete
+
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: python3.9
+    Environment:
+      Variables:
+        INCIDENTS_TABLE: !Ref IncidentsTable
+        COORDINATION_TABLE: !Ref CoordinationTable
+        TEAMS_TABLE: !Ref TeamsTable
+        ALERTS_TABLE: !Ref AlertsTable
+
+Resources:
+  # Lambda Functions
+  WasteClassifierFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambda-functions/waste-classifier/
+      Handler: app.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref IncidentsTable
+        - EventBridgePutEventsPolicy:
+            EventBusName: default
+      Events:
+        ClassifyWaste:
+          Type: Api
+          Properties:
+            Path: /classify
+            Method: post
+
+  CrossBorderCoordinatorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambda-functions/cross-border-coordinator/
+      Handler: app.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CoordinationTable
+        - StepFunctionsExecutionPolicy:
+            StateMachineName: !Ref CoordinationWorkflow
+      Events:
+        CoordinationTrigger:
+          Type: EventBridgeRule
+          Properties:
+            Pattern:
+              source: ["disaster.waste.tracker"]
+              detail-type: ["Cross-Border Incident Detected"]
+
+  LocationProcessorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambda-functions/location-processor/
+      Handler: app.lambda_handler
+      Events:
+        ProcessLocation:
+          Type: Api
+          Properties:
+            Path: /location/process
+            Method: post
+
+  AlertGeneratorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambda-functions/alert-generator/
+      Handler: app.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref AlertsTable
+        - SNSPublishMessagePolicy:
+            TopicName: !Ref EmergencyAlerts
+      Events:
+        GenerateAlert:
+          Type: Api
+          Properties:
+            Path: /alerts/generate
+            Method: post
+
+  ResourceOptimizerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambda-functions/resource-optimizer/
+      Handler: app.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TeamsTable
+      Events:
+        OptimizeResources:
+          Type: Api
+          Properties:
+            Path: /resources/optimize
+            Method: post
+
+  # DynamoDB Tables
+  IncidentsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: DisasterIncidents
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: incident_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: incident_id
+          KeyType: HASH
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+
+  CoordinationTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: CrossBorderCoordination
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: coordination_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: coordination_id
+          KeyType: HASH
+
+  TeamsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ResponseTeams
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: team_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: team_id
+          KeyType: HASH
+
+  AlertsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: AlertActivity
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: incident_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: incident_id
+          KeyType: HASH
+
+  # Step Functions
+  CoordinationWorkflow:
+    Type: AWS::StepFunctions::StateMachine
+    Properties:
+      StateMachineName: DisasterCoordinationWorkflow
+      DefinitionString: !Sub |
+        {
+          "Comment": "Cross-Border Disaster Coordination Workflow",
+          "StartAt": "ValidateIncident",
+          "States": {
+            "ValidateIncident": {
+              "Type": "Task",
+              "Resource": "${CrossBorderCoordinatorFunction.Arn}",
+              "Next": "CheckPriority"
+            },
+            "CheckPriority": {
+              "Type": "Choice",
+              "Choices": [
+                {
+                  "Variable": "$.priority",
+                  "StringEquals": "CRITICAL",
+                  "Next": "CriticalResponse"
+                },
+                {
+                  "Variable": "$.priority",
+                  "StringEquals": "HIGH",
+                  "Next": "HighPriorityResponse"
+                }
+              ],
+              "Default": "StandardResponse"
+            },
+            "CriticalResponse": {
+              "Type": "Parallel",
+              "Branches": [
+                {
+                  "StartAt": "ImmediateAlert",
+                  "States": {
+                    "ImmediateAlert": {
+                      "Type": "Task",
+                      "Resource": "${AlertGeneratorFunction.Arn}",
+                      "End": true
+                    }
+                  }
+                },
+                {
+                  "StartAt": "ResourceAllocation",
+                  "States": {
+                    "ResourceAllocation": {
+                      "Type": "Task",
+                      "Resource": "${ResourceOptimizerFunction.Arn}",
+                      "End": true
+                    }
+                  }
+                }
+              ],
+              "Next": "CoordinationComplete"
+            },
+            "HighPriorityResponse": {
+              "Type": "Task",
+              "Resource": "${AlertGeneratorFunction.Arn}",
+              "Next": "ResourceAllocation"
+            },
+            "StandardResponse": {
+              "Type": "Task",
+              "Resource": "${AlertGeneratorFunction.Arn}",
+              "Next": "CoordinationComplete"
+            },
+            "ResourceAllocation": {
+              "Type": "Task",
+              "Resource": "${ResourceOptimizerFunction.Arn}",
+              "Next": "CoordinationComplete"
+            },
+            "CoordinationComplete": {
+              "Type": "Succeed"
+            }
+          }
+        }
+      RoleArn: !GetAtt StepFunctionsRole.Arn
+
+  # SNS Topic
+  EmergencyAlerts:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: DisasterWasteTrackerAlerts
+
+  # IAM Role for Step Functions
+  StepFunctionsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: states.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: StepFunctionsExecutionPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - lambda:InvokeFunction
+                Resource:
+                  - !GetAtt WasteClassifierFunction.Arn
+                  - !GetAtt CrossBorderCoordinatorFunction.Arn
+                  - !GetAtt LocationProcessorFunction.Arn
+                  - !GetAtt AlertGeneratorFunction.Arn
+                  - !GetAtt ResourceOptimizerFunction.Arn
+
+Outputs:
+  ApiGatewayUrl:
+    Description: "API Gateway endpoint URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  
+  CoordinationWorkflowArn:
+    Description: "Step Functions workflow ARN"
+    Value: !Ref CoordinationWorkflow
+  
+  IncidentsTableName:
+    Description: "DynamoDB Incidents table name"
+    Value: !Ref IncidentsTable
