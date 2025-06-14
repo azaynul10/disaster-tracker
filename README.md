@@ -335,11 +335,6 @@ def coordinate_international_response(incident):
 
 </div>
 
-### 🏆 **Hackathon Achievements**
-- 🥇 **Best Use of AWS Lambda** - Innovation Category
-- 🥇 **Most Impactful Social Good Project** 
-- 🥇 **Best Cross-Border Coordination Solution**
-- 🥇 **Judge's Choice Award for Technical Excellence**
 
 ---
 
@@ -353,10 +348,10 @@ def coordinate_international_response(incident):
 
 *"What started as a desperate attempt to breathe clean air in Dhaka turned into a global solution protecting millions across borders."*
 
-**🎓 First-Year CS Student | 🇧🇩 Bangladesh**  
-**📧 Contact:** [your-email@example.com](mailto:your-email@example.com)  
+**🎓 CS Student at Brac University | 🇧🇩 Bangladesh**  
+**📧 Contact:** [azaynul3@gmail.com](mailto:azaynul3@gmail.com)  
 **🐙 GitHub:** [@azaynul10](https://github.com/azaynul10)  
-**💼 LinkedIn:** [Your Profile](https://linkedin.com/in/yourprofile)
+**💼 LinkedIn:** [Your Profile](https://www.linkedin.com/in/zaynul-abedin-miah/)
 
 </div>
 
