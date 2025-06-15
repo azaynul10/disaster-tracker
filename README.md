@@ -250,7 +250,7 @@ def coordinate_international_response(incident):
 
 <div align="center">
 
-[![Demo Video](https://img.youtube.com/vi/YOUR_VIDEO_ID/maxresdefault.jpg)](https://youtu.be/oAC2d_7NKZ0)
+[![Demo Video](https://img.youtube.com/vi/oAC2d_7NKZ0/maxresdefault.jpg)](https://youtu.be/oAC2d_7NKZ0)
 
 ### 📺 **3-Minute Demo Video**
 *Watch our system handle a live cross-border disaster simulation!*
