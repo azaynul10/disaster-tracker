@@ -10,10 +10,10 @@
 [![DynamoDB](https://img.shields.io/badge/Amazon_DynamoDB-4053D6?style=for-the-badge&logo=amazondynamodb&logoColor=white)](https://aws.amazon.com/dynamodb/)
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 
-![GitHub top language](https://img.shields.io/github/languages/top/azaynul10/disaster-waste-tracker?style=flat-square)
-![GitHub repo size](https://img.shields.io/github/repo-size/azaynul10/disaster-waste-tracker?style=flat-square)
-[![GitHub issues](https://img.shields.io/github/issues/azaynul10/disaster-waste-tracker?style=flat-square)](https://github.com/azaynul10/disaster-waste-tracker/issues)
-[![GitHub stars](https://img.shields.io/github/stars/azaynul10/disaster-waste-tracker?style=flat-square)](https://github.com/azaynul10/disaster-waste-tracker/stargazers)
+![GitHub top language](https://img.shields.io/github/languages/top/azaynul10/disaster-tracker?style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/azaynul10/disaster-tracker?style=flat-square)
+[![GitHub issues](https://img.shields.io/github/issues/azaynul10/disaster-tracker?style=flat-square)](https://github.com/azaynul10/disaster-tracker/issues)
+[![GitHub stars](https://img.shields.io/github/stars/azaynul10/disaster-tracker?style=flat-square)](https://github.com/azaynul10/disaster-tracker/stargazers)
 
 </div>
 
