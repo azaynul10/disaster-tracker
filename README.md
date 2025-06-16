@@ -250,7 +250,7 @@ def coordinate_international_response(incident):
 
 <div align="center">
 
-[![Demo Video](https://img.youtube.com/vi/oAC2d_7NKZ0/maxresdefault.jpg)](https://youtu.be/oAC2d_7NKZ0)
+[![Demo Video](https://img.youtube.com/vi/Tjdsposb62o?si=wz-380LvCA30-eq/maxresdefault.jpg)](https://youtu.be/Tjdsposb62o?si=wz-380LvCA30-eq9)
 
 ### 📺 **Demo Video**
 *Watch our system handle a live cross-border disaster simulation!*
@@ -365,7 +365,7 @@ def coordinate_international_response(incident):
 
 [![Deploy to AWS](https://img.shields.io/badge/Deploy_to_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)](http://disaster-tracker-1749839426.s3-website-us-east-1.amazonaws.com)
 [![View Source](https://img.shields.io/badge/View_Source-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/azaynul10/disaster-waste-tracker)
-[![Watch Demo](https://img.shields.io/badge/Watch_Demo-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
+[![Watch Demo](https://img.shields.io/badge/Watch_Demo-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/Tjdsposb62o?si=4nfVS19JRqqeoV_H)
 
 </div>
 
