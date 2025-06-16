@@ -378,8 +378,8 @@ def coordinate_international_response(incident):
 
 **⭐ Star this repo if it could save lives! ⭐**
 
-[![GitHub stars](https://img.shields.io/github/stars/azaynul10/disaster-waste-tracker?style=social)](https://github.com/azaynul10/disaster-tracker/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/azaynul10/disaster-waste-tracker?style=social)](https://github.com/azaynul10/disaster-tracker/network/members)
+[![GitHub stars](https://img.shields.io/github/stars/azaynul10/disaster-tracker?style=social)](https://github.com/azaynul10/disaster-tracker/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/azaynul10/disaster-tracker?style=social)](https://github.com/azaynul10/disaster-tracker/network/members)
 
 </div>
 
