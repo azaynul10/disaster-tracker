@@ -26,7 +26,16 @@
 <summary>🏆 <strong>Why This Project Will Change Disaster Response Forever</strong></summary>
 
 <br>
-![waste track](https://github.com/user-attachments/assets/8a0ae18a-4a20-4008-b606-701994d2564b)
+<img 
+  src="https://github.com/user-attachments/assets/8a0ae18a-4a20-4008-b606-701994d2564b" 
+  srcset="https://github.com/user-attachments/assets/8a0ae18a-4a20-4008-b606-701994d2564b 800w,
+          [smaller-image-url] 400w"
+  sizes="(max-width: 600px) 100vw, 800px"
+  alt="Real-Time Environmental Disaster Waste Tracking System dashboard showing cross-border coordination metrics" 
+  width="800" 
+  height="450" 
+  loading="lazy"
+>
 
 ### 🌟 **The Problem We're Solving**
 
