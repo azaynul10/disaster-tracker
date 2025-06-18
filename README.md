@@ -18,9 +18,6 @@
 </div>
 
 ---
-
-## 🎯 **Elevator Pitch**
-
 > "*When disasters strike across borders, every minute counts. Our serverless AI system coordinates waste management between countries in **47 minutes** instead of **14 days**, protecting **58 million people** through intelligent automation.*"
 
 ---
@@ -29,6 +26,7 @@
 <summary>🏆 <strong>Why This Project Will Change Disaster Response Forever</strong></summary>
 
 <br>
+![waste track](https://github.com/user-attachments/assets/8a0ae18a-4a20-4008-b606-701994d2564b)
 
 ### 🌟 **The Problem We're Solving**
 
@@ -250,7 +248,7 @@ def coordinate_international_response(incident):
 
 <div align="center">
 
-[![Demo Video](https://i.ytimg.com/vi/Tjdsposb62o/maxresdefault.jpg)](https://youtu.be/Tjdsposb62o?si=wz-380LvCA30-eq9)
+[![Demo Video](https://i.ytimg.com/vi/Tjdsposb62o/maxresdefault.jpg)](https://youtu.be/L1mjkCe20zE)
 ### 📺 **Demo Video**
 *Watch our system handle a live cross-border disaster simulation!*
 
@@ -364,7 +362,7 @@ def coordinate_international_response(incident):
 
 [![Deploy to AWS](https://img.shields.io/badge/Deploy_to_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)](http://disaster-tracker-1749839426.s3-website-us-east-1.amazonaws.com)
 [![View Source](https://img.shields.io/badge/View_Source-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/azaynul10/disaster-waste-tracker)
-[![Watch Demo](https://img.shields.io/badge/Watch_Demo-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/Tjdsposb62o?si=4nfVS19JRqqeoV_H)
+[![Watch Demo](https://img.shields.io/badge/Watch_Demo-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/L1mjkCe20zE)
 
 </div>
 
